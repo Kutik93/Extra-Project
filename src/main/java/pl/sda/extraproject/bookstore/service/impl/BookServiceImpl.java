@@ -29,7 +29,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book deleteById(Book book) {
+    public Book deleteById(Long book) {
         return null;
     }
 }
