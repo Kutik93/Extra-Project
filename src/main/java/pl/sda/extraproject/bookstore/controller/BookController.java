@@ -1,7 +1,9 @@
 package pl.sda.extraproject.bookstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.extraproject.bookstore.model.Book;
 import pl.sda.extraproject.bookstore.service.BookService;
@@ -16,27 +18,27 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public Collection<Book> findAll() {
-        return bookService.findAll();
+    public ResponseEntity <Collection<Book>> findAll() {
+        return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public Book findById(@PathVariable Long id) {
-        return bookService.findById(id);
+    public ResponseEntity<Book> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(bookService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Book save(@RequestBody Book book) {
-        return bookService.save(book);
+    public ResponseEntity<Book> save(@RequestBody Book book) {
+        return new ResponseEntity<>(bookService.save(book), HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Book update(@RequestBody Book book) {
-        return bookService.update(book);
+    public ResponseEntity<Book> update(@RequestBody Book book) {
+        return new ResponseEntity<>(bookService.update(book), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public Book deleteById(@PathVariable Long id) {
-        return bookService.deleteById(id);
+    public ResponseEntity<Book> deleteById(@PathVariable Long id) {
+        return new ResponseEntity<>(bookService.deleteById(id), HttpStatus.OK);
     }
 }
