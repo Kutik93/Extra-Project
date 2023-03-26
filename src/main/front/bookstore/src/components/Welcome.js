@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Card from 'react-bootstrap/Card';
 import {Row} from 'react-bootstrap';
 
-class Welcome extends React.Component {
+export default class Welcome extends Component {
         render() {
         return (
 <Row>
@@ -16,5 +16,3 @@ class Welcome extends React.Component {
         );
         }
 }
-
-export default Welcome;
