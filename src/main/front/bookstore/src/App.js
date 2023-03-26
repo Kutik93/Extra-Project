@@ -1,8 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
+
+import {Container, Col, Row} from 'react-bootstrap';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
 import NavigationBar from './components/NavigationBar'
-import Card from 'react-bootstrap/Card';
-import {Container, Row, Col} from 'react-bootstrap';
+import Footer from './components/Footer';
+import Welcome from './components/Welcome';
+import Book from './components/Book';
+import BookList from './components/BookList';
+
+
 
 function App() {
     const marginTop ={
@@ -10,21 +17,23 @@ function App() {
     }
 
   return (
-    <div className="App">
+    <Router>
     <NavigationBar/>
     <Container>
+    <Row>
         <Col lg={12} style={marginTop}>
-        <Row>
-            <Card className="bg-dark">
-                 <Card.Body className="bg-dark text-white">
-                 <Card.Title>Special title treatment</Card.Title>
-                 <Card.Text> With supporting text below as a natural lead-in to additional content.</Card.Text>
-                 </Card.Body>
-            </Card>
-        </Row>
+            <Routes>
+                <Route path="/" element={<Welcome/>}/>
+                <Route path="/add" element={<Book/>}/>
+                <Route path="/list" element={<BookList/>}/>
+            </Routes>
         </Col>
+        </Row>
     </Container>
-    </div>
+
+    <Footer/>
+
+    </Router>
   );
 }
 
