@@ -12,6 +12,7 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/books")
+@CrossOrigin("http://localhost:3000/")  //Potrzebne do obsługi zapytań między node.js a spring
 public class BookController {
 
     @Autowired
