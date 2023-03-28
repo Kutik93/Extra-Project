@@ -10,36 +10,20 @@ import pl.sda.extraproject.bookstore.service.BookService;
 
 import java.util.Collection;
 
-@RestController
-@RequestMapping("/books")
-@CrossOrigin("http://localhost:3000/")  //Potrzebne do obsługi zapytań między node.js a spring
-public class BookController {
-
-    @Autowired
-    private BookService bookService;
+public interface BookController<T> {
 
     @GetMapping
-    public ResponseEntity <Collection<Book>> findAll() {
-        return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
-    }
+    ResponseEntity<Collection<T>> findAll();
 
     @GetMapping("{id}")
-    public ResponseEntity<Book> findById(@PathVariable Long id) {
-        return new ResponseEntity<>(bookService.findById(id), HttpStatus.OK);
-    }
+    ResponseEntity<T> findById(@PathVariable Long id);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> save(@RequestBody Book book) {
-        return new ResponseEntity<>(bookService.save(book), HttpStatus.CREATED);
-    }
+    ResponseEntity<T> save(@RequestBody T t);
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> update(@RequestBody Book book) {
-        return new ResponseEntity<>(bookService.update(book), HttpStatus.OK);
-    }
+    ResponseEntity<T> update(@RequestBody T t);
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Book> deleteById(@PathVariable Long id) {
-        return new ResponseEntity<>(bookService.deleteById(id), HttpStatus.OK);
-    }
+    ResponseEntity<T> deleteById(@PathVariable Long id);
 }

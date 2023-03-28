@@ -19,7 +19,7 @@ public class BookServiceImpl implements BookService {
         book.setTitle("Titanic");
         book.setAuthor("Mr Yo");
         book.setPhotoUrl("https://i.pinimg.com/736x/8e/b8/6e/8eb86e77583008a395cf7e923a37ebff.jpg");
-        book.setIsbn(123432);
+        book.setIsbn(123432L);
         book.setPrice(22.50);
         bookMap.put(book.getId(), book);
     }

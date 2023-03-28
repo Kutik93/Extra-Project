@@ -5,7 +5,7 @@ public class Book {
     private String title;
     private String author;
     private String photoUrl;
-    private Integer isbn;
+    private Long isbn;
     private Double price;
 
     public Long getId() {
@@ -40,11 +40,11 @@ public class Book {
         this.photoUrl = photoUrl;
     }
 
-    public Integer getIsbn() {
+    public Long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(Long isbn) {
         this.isbn = isbn;
     }
 
