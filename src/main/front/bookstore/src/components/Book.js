@@ -91,8 +91,8 @@ export default class Book extends Component {
                         id: this.state.id,
                         title: this.state.title,
                         author: this.state.author,
-                        coverPhotoURL: this.state.coverPhotoURL,
-                        isbnNumber: this.state.isbnNumber,
+                        photoUrl: this.state.photoUrl,
+                        isbn: this.state.isbn,
                         price: this.state.price,
                         language: this.state.language
                     };

@@ -5,7 +5,7 @@ export default class Welcome extends  Component {
     render() {
            return (
 
-                          <div className="bg-dark text-white">
+                          <div className="bg-dark text-white" align="center">
                             <div className="container">
                               <h1 className="display-4">Welcome to your online collection of books.</h1>
                               <p className="lead">A room without books is a body without soul. </p>
