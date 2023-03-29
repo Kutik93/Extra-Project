@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Welcome from './components/Welcome';
 import Book from './components/Book';
 import BookList from './components/BookList';
+import UserList from './components/UserList';
 
 function App() {
     const marginTop ={
@@ -24,8 +25,9 @@ function App() {
             <Switch>
                      <Route path="/" exact component={Welcome}/>
                      <Route path="/add" exact component={Book}/>
-                      <Route path="/list" exact component={BookList}/>
-                      <Route path="/edit/:id" exact component={Book}/>
+                     <Route path="/list" exact component={BookList}/>
+                     <Route path="/edit/:id" exact component={Book}/>
+                     <Route path="/users" exact component={UserList}/>
             </Switch>
         </Col>
         </Row>

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Card, Table, Image, Button, ButtonGroup } from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faList, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 import MyToast from './MyToast';
 import {Link} from 'react-router-dom';
 
@@ -21,17 +20,20 @@ export default class Book extends Component {
     }
 
     findAllBooks() {
-           axios.get("http://localhost:8080/books")
-          .then(response => response.data)
+           fetch("http://localhost:8080/books")
+          .then(response => response.json())
           .then((data) => {
           this.setState({books: data});
           });
      };
 
       deleteBook = (bookId) => {
-          axios.delete("http://localhost:8080/books/"+bookId)
-              .then(response => {
-                  if(response.data != null) {
+          fetch("http://localhost:8080/books/"+bookId, {
+            method: 'DELETE'
+          })
+              .then(response => response.json())
+              .then((book) => {
+                  if(book) {
                       this.setState({"show":true});
                       setTimeout(() => this.setState({"show":false}), 3000);
                       this.setState({

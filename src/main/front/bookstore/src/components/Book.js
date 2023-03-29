@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import MyToast from './MyToast';
 
 import {Card, Button, Form, Row, Col} from 'react-bootstrap';
@@ -30,18 +29,23 @@ export default class Book extends Component {
                     isbn: this.state.isbn,
                     price: this.state.price
                 };
-                axios.post("http://localhost:8080/books", book)
-                .then(response => {
-                    if(response.data != null) {
+                const headers = new Headers();
+                headers.append('Content-Type', 'application/json');
+
+                fetch("http://localhost:8080/books", {
+                method: 'POST',
+                body: JSON.stringify(book),
+                headers})
+                .then(response => response.json())
+                .then((book) => {
+                    if(book) {
                         this.setState({"show":true, "method":"post"});
                         setTimeout(() => this.setState({"show":false}), 3000);
                     } else {
                         this.setState({"show":false});
                     }
             });
-
         this.setState(this.initialState);
-
     };
 
         componentDidMount() {
@@ -63,16 +67,17 @@ export default class Book extends Component {
         };
 
         findBookById = (bookId) => {
-                axios.get("http://localhost:8080/books/"+bookId)
-                    .then(response => {
-                        if(response.data != null) {
+                fetch("http://localhost:8080/books/"+bookId)
+                    .then(response => response.json())
+                    .then((data) => {
+                        if(data) {
                             this.setState({
-                                id: response.data.id,
-                                title: response.data.title,
-                                author: response.data.author,
-                                photoUrl: response.data.photoUrl,
-                                isbn: response.data.isbn,
-                                price: response.data.price
+                                id: data.id,
+                                title: data.title,
+                                author: data.author,
+                                photoUrl: data.photoUrl,
+                                isbn: data.isbn,
+                                price: data.price
                             });
                         }
                     }).catch((error) => {
@@ -97,9 +102,18 @@ export default class Book extends Component {
                         language: this.state.language
                     };
 
-                    axios.put("http://localhost:8080/books", book)
-                        .then(response => {
-                            if(response.data != null) {
+                    const headers = new Headers();
+                    headers.append('Content-Type', 'application/json');
+
+
+                    fetch("http://localhost:8080/books", {
+                                method: 'PUT',
+                                body: JSON.stringify(book),
+                                headers
+                            })
+                        .then(response => response.json())
+                         .then((book) => {
+                            if(book) {
                                 this.setState({"show":true, "method":"put"});
                                 setTimeout(() => this.setState({"show":false}), 3000);
                                 setTimeout(() => this.bookList(), 3000);
@@ -107,7 +121,6 @@ export default class Book extends Component {
                                 this.setState({"show":false});
                             }
                         });
-
                     this.setState(this.initialState);
                 }
 
@@ -121,7 +134,7 @@ export default class Book extends Component {
                      <MyToast show = {this.state.show} message = {this.state.method === "put" ? "Book Updated Successfully." : "Book Saved Successfully."} type = {"success"}/>
                  </div>
         <Card className={"border border-dark bg-dark text-white"}>
-            <Card.Header><FontAwesomeIcon icon={this.state.id ? faEdit : faPlusSquare} /> {this.state.id ? "Update Book" : "Add New Book"} Add New Book </Card.Header>
+            <Card.Header><FontAwesomeIcon icon={this.state.id ? faEdit : faPlusSquare} /> {this.state.id ? "Update Book" : "Add New Book"} </Card.Header>
             <Form onReset={this.resetBook} onSubmit={this.state.id ? this.updateBook : this.submitBook} id="bookFormId">
             <Card.Body>
                       <Row>
