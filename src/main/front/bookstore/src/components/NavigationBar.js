@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 
 
 
-
 export default class NavigationBar extends Component {
     render() {
         return (
@@ -17,6 +16,11 @@ export default class NavigationBar extends Component {
                     <Link to={"list"} className="nav-link">Book List</Link>
                     <Link to={"users"} className="nav-link">User List</Link>
                 </Nav>
+                <Nav className="navbar-right">
+                    <Link to={"login"} className="nav-link">Login</Link>
+                    <Link to={"register"} className="nav-link">Register</Link>
+                </Nav>
+
             </Navbar>
         );
     }

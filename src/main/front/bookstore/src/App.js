@@ -1,16 +1,17 @@
 import React from 'react';
-import './App.css';
+import './App';
 
-import {Container, Col, Row} from 'react-bootstrap';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Container, Row, Col} from 'react-bootstrap';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import NavigationBar from './components/NavigationBar'
-import Footer from './components/Footer';
+import NavigationBar from './components/NavigationBar';
 import Welcome from './components/Welcome';
 import Book from './components/Book';
 import BookList from './components/BookList';
 import UserList from './components/UserList';
-
+import Register from './components/Register';
+import Login from './components/Login';
+import Footer from './components/Footer';
 
 function App() {
     const marginTop ={
@@ -29,6 +30,8 @@ function App() {
                      <Route path="/list" exact component={BookList}/>
                      <Route path="/edit/:id" exact component={Book}/>
                      <Route path="/users" exact component={UserList}/>
+                     <Route path="/register" exact component={Register}/>
+                     <Route path="/login" exact component={Login}/>
             </Switch>
         </Col>
         </Row>
