@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import MyToast from './MyToast';
+import {connect} from 'react-redux';
+import {saveBook, fetchBook, updateBook} from '../services/index';
 
 import {Card, Button, Form, Row, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave, faPlusSquare, faList, faEdit} from '@fortawesome/free-solid-svg-icons';
 
-export default class Book extends Component {
+class Book extends Component {
     constructor(props) {
         super(props);
         this.state= {title:'', author:'', isbn:'', price:'', photoUrl:''};
@@ -29,30 +31,25 @@ export default class Book extends Component {
                     isbn: this.state.isbn,
                     price: this.state.price
                 };
-                const headers = new Headers();
-                headers.append('Content-Type', 'application/json');
 
-                fetch("http://localhost:8080/books", {
-                method: 'POST',
-                body: JSON.stringify(book),
-                headers})
-                .then(response => response.json())
-                .then((book) => {
-                    if(book) {
-                        this.setState({"show":true, "method":"post"});
-                        setTimeout(() => this.setState({"show":false}), 3000);
-                    } else {
-                        this.setState({"show":false});
-                    }
-            });
+            this.props.saveBook(book);
+                    setTimeout(() => {
+                        if(this.props.savedBookObject.book != null) {
+                            this.setState({"show":true, "method":"post"});
+                            setTimeout(() => this.setState({"show":false}), 3000);
+                        } else {
+                            this.setState({"show":false});
+                        }
+                    }, 2000);
+
         this.setState(this.initialState);
-    };
+            };
 
-        componentDidMount() {
-            const bookId = +this.props.match.params.id;
-            if(bookId) {
-                this.findBookById(bookId);
-            }
+         componentDidMount() {
+                const bookId = +this.props.match.params.id;
+                if(bookId) {
+                    this.findBookById(bookId);
+                }
             }
 
     resetBook = () => {
@@ -67,23 +64,21 @@ export default class Book extends Component {
         };
 
         findBookById = (bookId) => {
-                fetch("http://localhost:8080/books/"+bookId)
-                    .then(response => response.json())
-                    .then((data) => {
-                        if(data) {
-                            this.setState({
-                                id: data.id,
-                                title: data.title,
-                                author: data.author,
-                                photoUrl: data.photoUrl,
-                                isbn: data.isbn,
-                                price: data.price
-                            });
-                        }
-                    }).catch((error) => {
-                        console.error("Error - "+error);
-                    });
-            };
+           this.props.fetchBook(bookId);
+                   setTimeout(() => {
+                       let book = this.props.bookObject.book;
+                       if(book != null) {
+                           this.setState({
+                           id: book.id,
+                            title: book.title,
+                            author: book.author,
+                            photoUrl: book.photoUrl,
+                            isbn: book.isbn,
+                            price: book.price
+                       });
+                   }
+           }, 1000);
+        };
 
                 bookList = () => {
                     return this.props.history.push("/list");
@@ -102,27 +97,18 @@ export default class Book extends Component {
                         language: this.state.language
                     };
 
-                    const headers = new Headers();
-                    headers.append('Content-Type', 'application/json');
 
-
-                    fetch("http://localhost:8080/books", {
-                                method: 'PUT',
-                                body: JSON.stringify(book),
-                                headers
-                            })
-                        .then(response => response.json())
-                         .then((book) => {
-                            if(book) {
-                                this.setState({"show":true, "method":"put"});
-                                setTimeout(() => this.setState({"show":false}), 3000);
-                                setTimeout(() => this.bookList(), 3000);
-                            } else {
-                                this.setState({"show":false});
-                            }
-                        });
+                    this.props.updateBook(book);
+                            setTimeout(() => {
+                                if(this.props.updatedBookObject.book != null) {
+                                    this.setState({"show":true, "method":"put"});
+                                    setTimeout(() => this.setState({"show":false}), 3000);
+                                } else {
+                                    this.setState({"show":false});
+                                }
+                            }, 2000);
                     this.setState(this.initialState);
-                }
+                };
 
     render() {
 
@@ -205,4 +191,22 @@ export default class Book extends Component {
         </div>
         );
     }
-}
+};
+const mapStateToProps = state => {
+    return {
+        savedBookObject: state.book,
+        bookObject: state.book,
+        updatedBookObject: state.book
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        saveBook: (book) => dispatch(saveBook(book)),
+        fetchBook: (bookId) => dispatch(fetchBook(bookId)),
+        updateBook: (book) => dispatch(updateBook(book))
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book);

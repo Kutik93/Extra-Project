@@ -4,9 +4,12 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faList, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 import MyToast from './MyToast';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {connect} from 'react-redux';
+import {deleteBook} from '../services/index';
 
 
-export default class Book extends Component {
+class Book extends Component {
 
     constructor(props) {
         super(props);
@@ -20,29 +23,24 @@ export default class Book extends Component {
     }
 
     findAllBooks() {
-           fetch("http://localhost:8080/books")
-          .then(response => response.json())
+           axios.get("http://localhost:8080/books")
+          .then(response => response.data)
           .then((data) => {
           this.setState({books: data});
           });
      };
 
-      deleteBook = (bookId) => {
-          fetch("http://localhost:8080/books/"+bookId, {
-            method: 'DELETE'
-          })
-              .then(response => response.json())
-              .then((book) => {
-                  if(book) {
-                      this.setState({"show":true});
-                      setTimeout(() => this.setState({"show":false}), 3000);
-                      this.setState({
-                          books: this.state.books.filter(book => book.id !== bookId)
-                      });
-                  } else {
-                      this.setState({"show":false});
-                  }
-              });
+        deleteBook = (bookId) => {
+         this.props.deleteBook(bookId);
+         setTimeout(() => {
+             if(this.props.bookObject != null) {
+                 this.setState({"show":true});
+                 setTimeout(() => this.setState({"show":false}), 3000);
+                 this.findAllBooks(this.state.currentPage);
+             } else {
+                 this.setState({"show":false});
+             }
+         }, 1000);
       };
 
 render() {
@@ -93,3 +91,17 @@ render() {
             );
         }
     }
+
+const mapStateToProps = state => {
+    return {
+        bookObject: state.book
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        deleteBook: (bookId) => dispatch(deleteBook(bookId))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book);

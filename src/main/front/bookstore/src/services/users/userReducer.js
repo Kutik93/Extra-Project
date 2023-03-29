@@ -6,23 +6,23 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-    switch(action.type){
+    switch(action.type) {
         case FETCH_USER_REQUEST:
-            return{
+            return {
                 ...state
             };
-    case FETCH_USER_SUCCESS:
-        return {
-            users: action.payload,
-            error: ''
-        };
-    case FETCH_USER_FAILURE:
-        return {
-            users: [],
-            error: action.payload
-        };
-    default:
-        return state;
+        case FETCH_USER_SUCCESS:
+            return {
+                users: action.payload,
+                error: ''
+            };
+        case FETCH_USER_FAILURE:
+            return {
+                users: [],
+                error: action.payload
+            };
+        default:
+            return state;
     }
 };
 

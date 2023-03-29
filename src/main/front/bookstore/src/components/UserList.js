@@ -3,7 +3,7 @@ import {Card, Table, Alert} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUsers} from '@fortawesome/free-solid-svg-icons';
 import {connect} from 'react-redux';
-import {fetchUsers} from '../services/users/userAction';
+import {fetchUsers} from '../services/index';
 
 class UserList extends Component {
     constructor(props) {
