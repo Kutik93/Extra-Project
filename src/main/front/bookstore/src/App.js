@@ -3,6 +3,8 @@ import './App.css';
 
 import {Container, Col, Row} from 'react-bootstrap';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import store from './services/store';
 
 import NavigationBar from './components/NavigationBar'
 import Footer from './components/Footer';
@@ -10,6 +12,7 @@ import Welcome from './components/Welcome';
 import Book from './components/Book';
 import BookList from './components/BookList';
 import UserList from './components/UserList';
+
 
 function App() {
     const marginTop ={
@@ -27,7 +30,7 @@ function App() {
                      <Route path="/add" exact component={Book}/>
                      <Route path="/list" exact component={BookList}/>
                      <Route path="/edit/:id" exact component={Book}/>
-                     <Route path="/users" exact component={UserList}/>
+                     <Route path="/users" exact component={() => <Provider store={store}><UserList/></Provider>}/>
             </Switch>
         </Col>
         </Row>
