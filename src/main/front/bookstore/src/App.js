@@ -3,8 +3,6 @@ import './App.css';
 
 import {Container, Col, Row} from 'react-bootstrap';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import store from './services/store';
 
 import NavigationBar from './components/NavigationBar'
 import Footer from './components/Footer';
@@ -30,7 +28,7 @@ function App() {
                      <Route path="/add" exact component={Book}/>
                      <Route path="/list" exact component={BookList}/>
                      <Route path="/edit/:id" exact component={Book}/>
-                     <Route path="/users" exact component={() => <Provider store={store}><UserList/></Provider>}/>
+                     <Route path="/users" exact component={UserList}/>
             </Switch>
         </Col>
         </Row>
