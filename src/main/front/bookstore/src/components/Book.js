@@ -34,7 +34,7 @@ class Book extends Component {
 
             this.props.saveBook(book);
                     setTimeout(() => {
-                        if(this.props.savedBookObject.book != null) {
+                        if(this.props.bookObject.book != null) {
                             this.setState({"show":true, "method":"post"});
                             setTimeout(() => this.setState({"show":false}), 3000);
                         } else {
@@ -100,7 +100,7 @@ class Book extends Component {
 
                     this.props.updateBook(book);
                             setTimeout(() => {
-                                if(this.props.updatedBookObject.book != null) {
+                                if(this.props.bookObject.book != null) {
                                     this.setState({"show":true, "method":"put"});
                                     setTimeout(() => this.setState({"show":false}), 3000);
                                 } else {
@@ -194,9 +194,7 @@ class Book extends Component {
 };
 const mapStateToProps = state => {
     return {
-        savedBookObject: state.book,
         bookObject: state.book,
-        updatedBookObject: state.book
     };
 };
 

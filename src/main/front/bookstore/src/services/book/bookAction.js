@@ -1,9 +1,25 @@
-import {SAVE_BOOK_REQUEST, BOOK_SUCCESS, BOOK_FAILURE, FETCH_BOOK_REQUEST, UPDATE_BOOK_REQUEST, DELETE_BOOK_REQUEST} from './bookTypes';
+import * as BT from './bookTypes';
 import axios from 'axios';
+
+const bookSuccess = book => {
+    return {
+        type: BT.BOOK_SUCCESS,
+        payload: book
+    };
+};
+
+const bookFailure = error => {
+    return {
+        type: BT.BOOK_FAILURE,
+        payload: error
+    };
+};
 
 export const saveBook = book => {
     return dispatch => {
-        dispatch(saveBookRequest());
+        dispatch({
+            type: BT.SAVE_BOOK_REQUEST
+        });
         axios.post("http://localhost:8080/books", book)
             .then(response => {
                 dispatch(bookSuccess(response.data));
@@ -14,35 +30,11 @@ export const saveBook = book => {
     };
 };
 
-const saveBookRequest = () => {
-    return {
-        type: SAVE_BOOK_REQUEST
-    };
-};
-
-const bookSuccess = book => {
-    return {
-        type: BOOK_SUCCESS,
-        payload: book
-    };
-};
-
-const bookFailure = error => {
-    return {
-        type: BOOK_FAILURE,
-        payload: error
-    };
-};
-
-const updateBookRequest = () => {
-    return {
-        type: UPDATE_BOOK_REQUEST
-    };
-};
-
 export const updateBook = book => {
     return dispatch => {
-        dispatch(updateBookRequest());
+        dispatch({
+            type: BT.UPDATE_BOOK_REQUEST
+        });
         axios.put("http://localhost:8080/books", book)
             .then(response => {
                 dispatch(bookSuccess(response.data));
@@ -53,15 +45,11 @@ export const updateBook = book => {
     };
 };
 
-const fetchBookRequest = () => {
-    return {
-        type: FETCH_BOOK_REQUEST
-    };
-};
-
 export const fetchBook = bookId => {
     return dispatch => {
-        dispatch(fetchBookRequest());
+        dispatch({
+            type: BT.FETCH_BOOK_REQUEST
+        });
         axios.get("http://localhost:8080/books/"+bookId)
             .then(response => {
                 dispatch(bookSuccess(response.data));
@@ -72,15 +60,11 @@ export const fetchBook = bookId => {
     };
 };
 
-const deleteBookRequest = () => {
-    return {
-        type: DELETE_BOOK_REQUEST
-    };
-};
-
 export const deleteBook = bookId => {
     return dispatch => {
-        dispatch(deleteBookRequest());
+        dispatch({
+            type: BT.DELETE_BOOK_REQUEST
+        });
         axios.delete("http://localhost:8080/books/"+bookId)
             .then(response => {
                 dispatch(bookSuccess(response.data));
