@@ -70,11 +70,11 @@ class Login extends Component {
                         </Form.Group>
                     </Row>
                 </Card.Body>
-                <Card.Footer className={"bg-dark text-white"} style={{"text-align":"right"}} >
+                <Card.Footer className={"bg-dark text-white"} style={{"textAlign":"right"}} >
                     <Button size='sm' type='button' variant='success' onClick={this.validateUser} disabled={this.state.email.length=== 0 || this.state.password.length===0} >
                         <FontAwesomeIcon icon={faSignInAlt}/> Login
                     </Button> {' '}
-                    <Button size='sm' type='button' variant='info' onClick={this.resetLoginForm} >
+                    <Button size='sm' type='button' variant='info' onClick={this.resetLoginForm} disabled={this.state.email.length=== 0 && this.state.error.length===0}>
                         <FontAwesomeIcon icon={faUndo}/> Reset
                     </Button>
                 </Card.Footer>

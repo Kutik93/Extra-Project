@@ -32,6 +32,7 @@ function App() {
                      <Route path="/users" exact component={UserList}/>
                      <Route path="/register" exact component={Register}/>
                      <Route path="/login" exact component={Login}/>
+                     <Route path="/logout" exact component={Login}/>
             </Switch>
         </Col>
         </Row>
