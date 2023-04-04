@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserPlus, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -16,11 +18,10 @@ export default class NavigationBar extends Component {
                     <Link to={"list"} className="nav-link">Book List</Link>
                     <Link to={"users"} className="nav-link">User List</Link>
                 </Nav>
-                <Nav className="navbar-right">
-                    <Link to={"login"} className="nav-link">Login</Link>
-                    <Link to={"register"} className="nav-link">Register</Link>
+                <Nav className="right">
+                    <Link to={"register"} className="nav-link"><FontAwesomeIcon icon={faRightToBracket} />Register</Link>
+                    <Link to={"login"} className="nav-link"><FontAwesomeIcon icon={faUserPlus}/>Login</Link>
                 </Nav>
-
             </Navbar>
         );
     }
