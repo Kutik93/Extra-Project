@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.sda.extraproject.bookstore.controller.BookController;
@@ -15,11 +14,11 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/books")
-@CrossOrigin("http://localhost:3000/")  //Potrzebne do obsługi zapytań między node.js a spring
+@CrossOrigin("http://localhost:3000/")
 public class BookControllerImpl implements BookController<Book> {
-    @Autowired
-    private BookService bookService;
 
+    @Autowired
+    private BookService<Book> bookService;
     @Override
     public ResponseEntity<Collection<Book>> findAll() {
         return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
@@ -27,7 +26,7 @@ public class BookControllerImpl implements BookController<Book> {
 
     @Override
     public ResponseEntity<Book> findById(Long id) {
-        return new ResponseEntity<>(bookService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(bookService.findById(id).get(), HttpStatus.OK);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class BookControllerImpl implements BookController<Book> {
     }
 
     @Override
-    public ResponseEntity<Book> deleteById(Long id) {
+    public ResponseEntity<String> deleteById(Long id) {
         return new ResponseEntity<>(bookService.deleteById(id), HttpStatus.OK);
     }
 }
