@@ -48,7 +48,7 @@ class Login extends Component {
       <Row className="justify-content-md-center">
         <Col xs={5}>
             {error && <Alert variant="danger">{error}</Alert>}
-            <Card className={"bg-dark text-white "} >
+            <Card className={"bg-dark text-white"} >
                 <Card.Header className={"text-center bg-dark text-white"}>
                     <FontAwesomeIcon icon={faSignInAlt}  /> Login
                 </Card.Header>

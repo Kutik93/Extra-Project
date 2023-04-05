@@ -3,18 +3,19 @@ package pl.sda.extraproject.bookstore.service;
 import pl.sda.extraproject.bookstore.model.Book;
 
 import java.util.Collection;
+import java.util.Optional;
 
-public interface BookService {
+public interface BookService<T> {
 
-    Collection<Book> findAll();
+    Collection<T> findAll();
 
-    Book findById(Long id);
+    Optional<T> findById(Long id);
 
-    Book save(Book book);
+    T save(T t);
 
-    Book update(Book book);
+    T update(T t);
 
-    Book deleteById(Long id);
+    String deleteById(Long id);
 
 
 }

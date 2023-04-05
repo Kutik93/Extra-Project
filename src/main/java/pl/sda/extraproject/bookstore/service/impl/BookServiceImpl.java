@@ -1,61 +1,46 @@
 package pl.sda.extraproject.bookstore.service.impl;
 
+import net.minidev.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.extraproject.bookstore.model.Book;
+import pl.sda.extraproject.bookstore.repository.BookRepository;
 import pl.sda.extraproject.bookstore.service.BookService;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl implements BookService<Book> {
+    @Autowired
+    private BookRepository bookRepository;
 
-    private Long bookId = 100L;
-    private Map<Long, Book> bookMap = new HashMap<Long, Book>();
-    {
-        Book book= new Book();
-        book.setId(bookId);
-        book.setTitle("Titanic");
-        book.setAuthor("Mr Yo");
-        book.setPhotoUrl("https://i.pinimg.com/736x/8e/b8/6e/8eb86e77583008a395cf7e923a37ebff.jpg");
-        book.setIsbn(123432L);
-        book.setPrice(22.50);
-        bookMap.put(book.getId(), book);
-    }
     @Override
-    public Collection<Book> findAll() {
-        return bookMap.values();
+    public Collection findAll() {
+        return (Collection<Book>) bookRepository.findAll();
     }
 
     @Override
-    public Book findById(Long id) {
-        return bookMap.get(id);
+    public Optional<Book> findById(Long id) {
+        return bookRepository.findById(id);
     }
 
     @Override
     public Book save(Book book) {
-        Long newId = ++bookId;
-        book.setId(newId);
-        bookMap.put(book.getId(), book);
-        return bookMap.get(newId);
+        return bookRepository.save(book);
     }
 
     @Override
     public Book update(Book book) {
-        bookId = book.getId();
-        if(bookMap.get(bookId) != null){
-            bookMap.put(bookId, book);
-            return bookMap.get(bookId);
-        }
-        return null;
+        return bookRepository.save(book);
     }
 
+
     @Override
-    public Book deleteById(Long id) {
-        if(bookMap.get(id) != null){
-            return bookMap.remove(id);
-        }
-        return null;
+    public String deleteById(Long id) {
+        JSONObject jsonObject = new JSONObject();
+        bookRepository.deleteById(id);
+        jsonObject.put("message", "Book deleted successfully");
+        return jsonObject.toString();
     }
 }
